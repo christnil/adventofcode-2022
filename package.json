@@ -2,15 +2,16 @@
   "name": "advent-of-code-2022",
   "version": "1.0.0",
   "description": "",
-  "main": "day1.js",
-  "type": "module",
+  "main": "src/day1/food.ts",
   "scripts": {
-    "test": "NODE_ENV=test mocha -r chai/register-expect.js --parallel --timeout 60000 --jobs 4 \"./**/*.spec.js\"",
+    "test": "mocha",
     "lint": "eslint --ignore-path .eslintignore --ext .js,.ts ."
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/chai": "^4.3.4",
+    "@types/mocha": "^10.0.1",
     "@typescript-eslint/eslint-plugin": "^5.45.0",
     "@typescript-eslint/parser": "^5.45.0",
     "chai": "^4.3.7",

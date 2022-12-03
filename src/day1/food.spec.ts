@@ -1,4 +1,5 @@
-import { getMaxCalories, getMax3Calories } from './day1.js';
+import { getMaxCalories, getMax3Calories } from './food';
+import { expect } from 'chai';
 
 const input = [
   '1000',
