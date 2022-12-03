@@ -21,12 +21,12 @@ describe('Day 1', function () {
   it('gets max calories from array', function () {
     const result = getMaxCalories(input);
 
-    expect(result).to.equal(24000)
-  })
+    expect(result).to.equal(24000);
+  });
 
   it('gets max 3 calories from array', function () {
     const result = getMax3Calories(input);
 
-    expect(result).to.equal(45000)
-  })
-})
+    expect(result).to.equal(45000);
+  });
+});
