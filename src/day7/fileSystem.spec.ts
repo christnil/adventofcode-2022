@@ -1,0 +1,45 @@
+import { part1, part2 } from './fileSystme';
+import { expect } from 'chai';
+import { readLinesRemoveEmpty } from '../utils/input';
+
+const input = `$ cd /
+$ ls
+dir a
+14848514 b.txt
+8504156 c.dat
+dir d
+$ cd a
+$ ls
+dir e
+29116 f
+2557 g
+62596 h.lst
+$ cd e
+$ ls
+584 i
+$ cd ..
+$ cd ..
+$ cd d
+$ ls
+4060174 j
+8033020 d.log
+5626152 d.ext
+7214296 k`;
+
+describe('Day 7', function () {
+  it('part 1', function () {
+    const result = part1(input.split('\n'));
+
+    expect(result).to.equal(95437);
+  });
+  it('part 2', function () {
+    const result = part2(input.split('\n'));
+
+    expect(result).to.equal(24933642);
+  });
+  it('debug', function () {
+    const lines = readLinesRemoveEmpty('src/day7/input');
+    const result = part2(lines);
+    expect(result).to.equal(0);
+  });
+});

@@ -1,7 +1,8 @@
-import { readLines } from '../utils/input';
+import { parseLines } from '../utils/input';
 import { getMaxCalories, getMax3Calories } from './food';
+import { rowSchema, format } from './row-schema';
 
-const lines = readLines('input');
+const lines = parseLines('src/day1/input', rowSchema, format);
 const max = getMaxCalories(lines);
 
 const max3 = getMax3Calories(lines);
