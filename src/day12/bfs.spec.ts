@@ -15,6 +15,6 @@ describe('Day 12', function () {
   it('part 2', function () {
     const result = part2('src/day12/test');
 
-    expect(result).to.equal(0);
+    expect(result).to.equal(29);
   });
 });
