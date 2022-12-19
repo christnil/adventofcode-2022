@@ -1,4 +1,4 @@
-import { part1, part2 } from './sand';
+import { part1, part2 } from './beacon';
 import { expect } from 'chai';
 
 describe('Day 15', function () {
