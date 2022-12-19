@@ -82,6 +82,7 @@ export type Graph<T> = {
   addNode: (node: T) => void;
   addEdge: (from: T | string, to: T | string, weight?: number) => void;
   getEdges: (from: T | string) => Edge<T>[];
+  getNodes: () => T[];
   setEdgeWeight: (from: T | string, to: T | string, weight?: number) => void;
 };
 
@@ -119,6 +120,10 @@ export const graph = <T extends { id: string }>(nodes?: T[]): Graph<T> => {
     return _edges[graphNode.id];
   };
 
+  const getNodes = (): T[] => {
+    return Object.values(_nodes);
+  };
+
   const setEdgeWeight = (from: T | string, to: T | string, weight = 1) => {
     const fromId = typeof from === 'string' ? from : from.id;
     const toId = typeof to === 'string' ? to : to.id;
@@ -139,6 +144,7 @@ export const graph = <T extends { id: string }>(nodes?: T[]): Graph<T> => {
     addNode,
     addEdge,
     getEdges,
+    getNodes,
     setEdgeWeight,
   };
 };
