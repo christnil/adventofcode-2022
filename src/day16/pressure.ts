@@ -44,11 +44,16 @@ const buildGraph = (valves: Valve[]): Graph<Valve> => {
       initialGraph.addEdge(valve, to, 1);
     });
   });
-  const mainGraph = graph<Valve>(valves);
-  for (const valve of valves) {
+  const nonNullValves = valves.filter((v) => v.flowRate > 0 || v.id === 'AA');
+  const mainGraph = graph<Valve>(nonNullValves);
+  for (const valve of nonNullValves) {
     const bfsResult = bfs(initialGraph, valve);
-    for (const targetValve of valves) {
-      if (bfsResult[targetValve.id] && targetValve.id !== valve.id) {
+    for (const targetValve of nonNullValves) {
+      if (
+        bfsResult[targetValve.id] &&
+        targetValve.id !== valve.id &&
+        targetValve.id !== 'AA'
+      ) {
         mainGraph.addEdge(
           valve,
           targetValve,
