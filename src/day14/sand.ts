@@ -1,5 +1,4 @@
 import { readLinesRemoveEmpty } from '../utils/input';
-import { parse } from '@typescript-eslint/parser';
 
 const DEBUG = false;
 
@@ -89,7 +88,10 @@ const getInitialMap = (lines: string[]) => {
   };
 };
 
-const getPointValue = (map: number[][], p: Point): number => {
+const getPointValue = (map: number[][], p: Point, maxY?: number): number => {
+  if (maxY && p.y === maxY + 2) {
+    return WALL;
+  }
   const row = map[p.y] || [];
   const val = row[p.x];
   return val || EMPTY;
@@ -118,7 +120,7 @@ const printMap = ({
   };
   for (let y = minY; y <= maxY; y++) {
     for (let x = minX; x <= maxX; x++) {
-      const val = getPointValue(map, { x, y });
+      const val = getPointValue(map, { x, y }, maxY);
       if (val === WALL) {
         print('#');
       } else if (val === SAND) {
@@ -133,17 +135,17 @@ const printMap = ({
   }
 };
 
-const getNextSandPos = (p: Point, map: number[][]): Point => {
+const getNextSandPos = (p: Point, map: number[][], maxY?: number): Point => {
   const below = { x: p.x, y: p.y + 1 };
-  if (getPointValue(map, below) === EMPTY) {
+  if (getPointValue(map, below, maxY) === EMPTY) {
     return below;
   }
   const diagonal1 = { x: p.x - 1, y: p.y + 1 };
-  if (getPointValue(map, diagonal1) === EMPTY) {
+  if (getPointValue(map, diagonal1, maxY) === EMPTY) {
     return diagonal1;
   }
   const diagonal2 = { x: p.x + 1, y: p.y + 1 };
-  if (getPointValue(map, diagonal2) === EMPTY) {
+  if (getPointValue(map, diagonal2, maxY) === EMPTY) {
     return diagonal2;
   }
   return p;
@@ -181,5 +183,30 @@ export const part1 = (fileName: string) => {
 
 export const part2 = (fileName: string) => {
   const lines = readLinesRemoveEmpty(fileName);
-  return 0;
+  const { map, minX, maxX, minY, maxY } = getInitialMap(lines);
+  printMap({ map, minX, maxX, minY, maxY: maxY + 2 });
+  let restedSandCount = 0;
+  let done = false;
+  while (!done) {
+    let sandPos: Point = { x: 500, y: 0 };
+    let sandNext = getNextSandPos(sandPos, map);
+    while (!pointEqual(sandPos, sandNext) && sandPos.y < maxY + 2) {
+      sandPos = sandNext;
+      sandNext = getNextSandPos(sandPos, map, maxY);
+    }
+    if (sandPos.y === 0) {
+      done = true;
+    } else {
+      restedSandCount++;
+      if (!map[sandPos.y]) {
+        map[sandPos.y] = [];
+      }
+      map[sandPos.y][sandPos.x] = SAND;
+    }
+    if (DEBUG) {
+      printMap({ map, minX, maxX, minY, maxY: maxY + 3 });
+    }
+  }
+  printMap({ map, minX, maxX, minY, maxY: maxY + 2 });
+  return restedSandCount + 1;
 };
